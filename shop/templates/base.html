@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}КосмоТур{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+</head>
+<body class="cosmic-bg">
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="logo">🌌 КосмоТур</div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'index' %}">Главная</a></li>
+                    {% for item in menu %}
+                        <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="page-content">
+            <div class="container">
+                {% block content %}
+                    <!-- Здесь будет контент страниц -->
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <p>© 2025 КосмоТур — Исследуй Вселенную вместе с нами.</p>
+    </footer>
+</body>
+</html>

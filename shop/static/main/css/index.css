@@ -1,0 +1,138 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+body.cosmic-bg {
+    background: linear-gradient(to bottom, #000428, #004e92);
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00f7ff;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #00f7ff;
+}
+
+.page-content {
+    flex-grow: 1;
+    max-width: 100%; /* Убираем ограничение на максимальную ширину */
+    padding: 0 1rem;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Стили для контента */
+.container {
+    width: 100%; /* Устанавливаем ширину в 100% */
+    padding: 2rem;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    color: #00f7ff;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #cccccc;
+    margin-bottom: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: #00f7ff;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #00d4dd;
+}
+
+/* Категории планет */
+.categories {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.categories a {
+    text-decoration: none;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.categories a:hover {
+    background-color: #00f7ff;
+    color: #000;
+}
+
+/* Блоки с информацией о планетах */
+.planets .planet {
+    width: 100%; /* Устанавливаем ширину в 100% */
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #004e92; /* Синий фон */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.planets .planet:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+}
+
+.planets .planet p {
+    margin-bottom: 1rem;
+}
