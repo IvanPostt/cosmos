@@ -21,14 +21,34 @@
             </nav>
         </header>
 
-        <main class="page-content">
-            <div class="container">
-                {% block content %}
+        <div class="main-container">
+            <!-- Боковая панель -->
+            <aside class="sidebar">
+                <h3>Категории</h3>
+                <nav class="category-nav">
+                    <ul>
+                        {% for cat in categories %}
+                            <li>
+                                {% if current_category.slug == cat.slug %}
+                                    <a href="{{ cat.get_absolute_url }}" class="selected">{{ cat.name }}</a>
+                                {% else %}
+                                    <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Основной контент -->
+            <main class="page-content">
+                <div class="container">
+                    {% block content %}
                     <!-- Здесь будет контент страниц -->
-                {% endblock %}
-            </div>
-        </main>
-    </div>
+                    {% endblock %}
+                </div>
+            </main>
+        </div>
 
     <footer class="site-footer">
         <p>© 2025 КосмоТур — Исследуй Вселенную вместе с нами.</p>

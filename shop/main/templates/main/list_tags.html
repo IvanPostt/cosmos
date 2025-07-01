@@ -1,0 +1,7 @@
+{% if tags %}
+<p>Тэг:</p>
+<ul class="tags=list">
+    {% for i in tags %}
+    <li><a href="{{ i.get_absolute_url }}">{{ t.names }}</a></li>
+    {% endfor %}
+</ul>

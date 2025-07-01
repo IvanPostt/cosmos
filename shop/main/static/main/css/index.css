@@ -10,10 +10,12 @@ html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
     line-height: 1.6;
+    background: radial-gradient(ellipse at bottom, #0d0d2b 0%, #000000 100%);
+    overflow-x: hidden;
 }
 
 body.cosmic-bg {
-    background: linear-gradient(to bottom, #000428, #004e92);
+    background: radial-gradient(ellipse at center, #0f0f3d, #000000);
 }
 
 .page-wrapper {
@@ -23,18 +25,22 @@ body.cosmic-bg {
 }
 
 .site-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(10, 10, 40, 0.95);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    z-index: 10;
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: bold;
     color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff;
 }
 
 .main-nav ul {
@@ -46,37 +52,40 @@ body.cosmic-bg {
 .main-nav a {
     text-decoration: none;
     color: #fff;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-weight: 500;
 }
 
 .main-nav a:hover {
     color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff;
+}
+
+/* Основной контент */
+.main-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    flex-grow: 1;
+    position: relative;
 }
 
 .page-content {
-    flex-grow: 1;
-    max-width: 100%; /* Убираем ограничение на максимальную ширину */
-    padding: 0 1rem;
+    flex: 1;
+    max-width: 100%;
 }
 
-.site-footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.9rem;
-    color: #aaa;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Стили для контента */
 .container {
-    width: 100%; /* Устанавливаем ширину в 100% */
+    width: 100%;
     padding: 2rem;
 }
 
+/* Заголовки и текст */
 h1, h2, h3 {
     font-weight: bold;
     color: #00f7ff;
     margin-bottom: 1rem;
+    text-shadow: 0 0 5px #00f7ff;
 }
 
 p {
@@ -95,47 +104,81 @@ a:hover {
     color: #00d4dd;
 }
 
-/* Категории планет */
-.categories {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+/* Боковая панель (космическая) */
+.sidebar {
+    width: 260px;
+    background: linear-gradient(145deg, #101030, #0d0d2b);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 247, 255, 0.1);
 }
 
-.categories a {
+.sidebar h3 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    color: #00f7ff;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-shadow: 0 0 5px #00f7ff;
+}
+
+.category-nav ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.category-nav li {
+    margin-bottom: 0.6rem;
+}
+
+.category-nav a {
+    color: #ccc;
     text-decoration: none;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.categories a:hover {
-    background-color: #00f7ff;
-    color: #000;
-}
-
-/* Блоки с информацией о планетах */
-.planets .planet {
-    width: 100%; /* Устанавливаем ширину в 100% */
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background-color: #004e92; /* Синий фон */
+    display: block;
+    padding: 0.6rem 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
-.planets .planet:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+.category-nav a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 247, 255, 0.1), transparent 60%);
+    transform: translateY(-50%);
+    transition: left 0.5s ease;
+    z-index: 0;
 }
 
-.planets .planet p {
-    margin-bottom: 1rem;
+.category-nav a span {
+    position: relative;
+    z-index: 1;
 }
+
+.category-nav a:hover,
+.category-nav a.selected {
+    background: rgba(0, 247, 255, 0.15);
+    color: #00f7ff;
+    border-color: rgba(0, 247, 255, 0.4);
+}
+
+.category-nav a:hover::before,
+.category-nav a.selected::before {
+    left: 100%;
+}
+
 /* Стили для карточек постов */
 .post-card {
     background-color: rgba(255, 255, 255, 0.05);
@@ -145,6 +188,7 @@ a:hover {
     backdrop-filter: blur(5px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 2rem;
+    border: 1px solid rgba(0, 247, 255, 0.1);
 }
 
 .post-card:hover {
@@ -155,6 +199,7 @@ a:hover {
 .post-card h2 {
     color: #00f7ff;
     margin-bottom: 1rem;
+    text-shadow: 0 0 5px #00f7ff;
 }
 
 .post-card p {
@@ -166,14 +211,26 @@ a:hover {
 .read-more {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #00f7ff;
+    background: linear-gradient(to right, #00f7ff, #00d4dd);
     color: #090541;
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    text-shadow: 0 0 3px #ffffff;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .read-more:hover {
-    background-color: #00d4dd;
+    background: linear-gradient(to right, #00d4dd, #00f7ff);
+    transform: scale(1.05);
+}
+
+/* Футер */
+.site-footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
 }

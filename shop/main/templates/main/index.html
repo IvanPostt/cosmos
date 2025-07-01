@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    {% include 'main/includes/nav.html' %}
-    <div class="posts-container">
-        {% for post in posts %}
-            <div class="post-card">
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.description|truncatewords:50 }}</p>
-                <a href="{{ post.get_absolute_url }}" class="read-more">Узнать подробнее</a>
-            </div>
-        {% endfor %}
+<h1>{{ title }}</h1>
+
+<div class="posts-container">
+    {% for post in posts %}
+    <div class="post-card">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.description|truncatewords:50 }}</p>
+        <a href="{{ post.get_absolute_url }}" class="read-more">Узнать подробнее</a>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}
