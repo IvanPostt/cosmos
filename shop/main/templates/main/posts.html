@@ -1,8 +1,8 @@
 {% extends  'base.html' %}
 {% block content %}
 <h1>{{post.title}}</h1>
-{% if post.photo %}
-<p><img src="{{post.photo.url}}" class="img-article-left"></p>
+{% if post.file %}
+<img src="{{ post.file.url }}" class="img-article-left" width="100px" , height="100px">
 {% endif %}
 {{post.description|linebreaks}}
 {% endblock %}

@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
+
+from .forms import AddForm
 from .models import SpaceObj, Category, TagsSpace
 
 menu = [{'title': 'Информация о сайте', 'url_name': 'about'},
@@ -28,9 +30,31 @@ def about(request):
 
 
 def createpost(request):
-    return HttpResponse('Создать запись')
+    if request.method == 'POST':
+        form = AddForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddForm()
+    data = {
+        'menu': menu,
+        'title': 'Создать новую запись',
+        'form': form
 
+    }
+    return render(request, 'main/create.html', data)
 
+def edit_post(request, pk):
+    post = get_object_or_404(SpaceObj, pk=pk)
+    if request.method == 'POST':
+        form = AddForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddForm(instance=post)
+    return render(request, 'main/edit.html', {'form':form, 'title': 'Редактирование поста'})
 def contact(request):
     return HttpResponse('Контактная информация')
 
@@ -67,6 +91,7 @@ def show_category(request, category_slug):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("Page not found")
+
 
 def show_tags(request, tags_slug):
     tags = get_object_or_404(TagsSpace, slug=tags_slug)

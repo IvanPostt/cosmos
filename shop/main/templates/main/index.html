@@ -6,9 +6,19 @@
 <div class="posts-container">
     {% for post in posts %}
     <div class="post-card">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.description|truncatewords:50 }}</p>
-        <a href="{{ post.get_absolute_url }}" class="read-more">Узнать подробнее</a>
+        <div class="post-content-wrapper">
+            {% if post.file %}
+                <div class="post-image">
+                    <img src="{{ post.file.url }}" alt="{{ post.title }}" width="100px" , height="100px">
+                </div>
+            {% endif %}
+            <div class="post-text">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.description|truncatewords:50 }}</p>
+                <a href="{{ post.get_absolute_url }}" class="read-more">Узнать подробнее</a>
+                <a href="{% url 'edit' post.id %}" class="read-more">Редактировать запись</a>
+            </div>
+        </div>
     </div>
     {% endfor %}
 </div>

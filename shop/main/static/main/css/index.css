@@ -234,3 +234,76 @@ a:hover {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.3);
 }
+/* Контейнер для разделения изображения и текста */
+/* Стили для контейнера поста */
+.post-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 247, 255, 0.1);
+}
+
+/* Обёртка для изображения и текста */
+.post-content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+/* Блок с изображением */
+.post-image {
+    flex: 0 0 120px; /* Ширина изображения */
+    max-width: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Текст поста */
+.post-text {
+    flex: 1;
+    min-width: 0; /* Для корректной работы flexbox */
+}
+
+/* Заголовок поста */
+.post-text h2 {
+    color: #00f7ff;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 5px #00f7ff;
+}
+
+/* Описание поста */
+.post-text p {
+    font-size: 1rem;
+    color: #cccccc;
+    margin-bottom: 1.2rem;
+}
+
+/* Кнопки "Узнать подробнее" и "Редактировать запись" */
+.read-more {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, #00f7ff, #00d4dd);
+    color: #090541;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    text-shadow: 0 0 3px #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.read-more:hover {
+    background: linear-gradient(to right, #00d4dd, #00f7ff);
+    transform: scale(1.05);
+}
