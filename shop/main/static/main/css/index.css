@@ -18,6 +18,17 @@ body.cosmic-bg {
     background: radial-gradient(ellipse at center, #0f0f3d, #000000);
 }
 
+a {
+    text-decoration: none;
+    color: #00f7ff;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #00d4dd;
+}
+
+/* Структура страницы */
 .page-wrapper {
     min-height: 100vh;
     display: flex;
@@ -50,7 +61,6 @@ body.cosmic-bg {
 }
 
 .main-nav a {
-    text-decoration: none;
     color: #fff;
     transition: color 0.3s ease, text-shadow 0.3s ease;
     font-weight: 500;
@@ -61,7 +71,7 @@ body.cosmic-bg {
     text-shadow: 0 0 10px #00f7ff;
 }
 
-/* Основной контент */
+/* Контент */
 .main-container {
     display: flex;
     gap: 2rem;
@@ -94,17 +104,7 @@ p {
     margin-bottom: 1.5rem;
 }
 
-a {
-    text-decoration: none;
-    color: #00f7ff;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #00d4dd;
-}
-
-/* Боковая панель (космическая) */
+/* Боковая панель */
 .sidebar {
     width: 260px;
     background: linear-gradient(145deg, #101030, #0d0d2b);
@@ -120,10 +120,8 @@ a:hover {
 
 .sidebar h3 {
     font-size: 1.1rem;
-    margin-top: 0;
     margin-bottom: 1.2rem;
     color: #00f7ff;
-    letter-spacing: 0.5px;
     text-align: center;
     text-shadow: 0 0 5px #00f7ff;
 }
@@ -139,7 +137,6 @@ a:hover {
 
 .category-nav a {
     color: #ccc;
-    text-decoration: none;
     display: block;
     padding: 0.6rem 1rem;
     border-radius: 8px;
@@ -179,7 +176,7 @@ a:hover {
     left: 100%;
 }
 
-/* Стили для карточек постов */
+/* Карточки постов */
 .post-card {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
@@ -196,67 +193,14 @@ a:hover {
     box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
 }
 
-.post-card h2 {
-    color: #00f7ff;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 5px #00f7ff;
-}
-
-.post-card p {
-    font-size: 1rem;
-    color: #cccccc;
-    margin-bottom: 1.2rem;
-}
-
-.read-more {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(to right, #00f7ff, #00d4dd);
-    color: #090541;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    text-shadow: 0 0 3px #ffffff;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.read-more:hover {
-    background: linear-gradient(to right, #00d4dd, #00f7ff);
-    transform: scale(1.05);
-}
-
-/* Футер */
-.site-footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.9rem;
-    color: #aaa;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.3);
-}
-/* Контейнер для разделения изображения и текста */
-/* Стили для контейнера поста */
-.post-card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(0, 247, 255, 0.1);
-}
-
-/* Обёртка для изображения и текста */
 .post-content-wrapper {
     display: flex;
     align-items: flex-start;
     gap: 1.5rem;
 }
 
-/* Блок с изображением */
 .post-image {
-    flex: 0 0 120px; /* Ширина изображения */
+    flex: 0 0 120px;
     max-width: 120px;
     border-radius: 8px;
     overflow: hidden;
@@ -269,33 +213,23 @@ a:hover {
     display: block;
 }
 
-/* Текст поста */
 .post-text {
     flex: 1;
-    min-width: 0; /* Для корректной работы flexbox */
+    min-width: 0;
 }
 
-/* Заголовок поста */
-.post-text h2 {
-    color: #00f7ff;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 5px #00f7ff;
-}
-
-/* Описание поста */
 .post-text p {
     font-size: 1rem;
     color: #cccccc;
     margin-bottom: 1.2rem;
 }
 
-/* Кнопки "Узнать подробнее" и "Редактировать запись" */
+/* Кнопка "Подробнее" и т.п. */
 .read-more {
     display: inline-block;
     padding: 0.5rem 1rem;
     background: linear-gradient(to right, #00f7ff, #00d4dd);
     color: #090541;
-    text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
     text-shadow: 0 0 3px #ffffff;
@@ -306,4 +240,124 @@ a:hover {
 .read-more:hover {
     background: linear-gradient(to right, #00d4dd, #00f7ff);
     transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
+}
+
+/* Пагинация */
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.page-item {
+    display: inline-block;
+}
+
+.page-link {
+    color: #00f7ff;
+    background-color: rgba(0, 247, 255, 0.1);
+    border: 1px solid rgba(0, 247, 255, 0.3);
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: bold;
+    min-width: 36px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 247, 255, 0.1);
+}
+
+.page-link:hover {
+    background-color: rgba(0, 247, 255, 0.2);
+    color: #00d4dd;
+    box-shadow: 0 0 8px rgba(0, 247, 255, 0.3);
+}
+
+.page-item.active .page-link {
+    background-color: #00f7ff;
+    color: #090541;
+    border-color: #00f7ff;
+    box-shadow: 0 0 8px #00f7ff;
+}
+
+/* Кнопки пагинации */
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Выпадающее меню профиля */
+.profile-dropdown {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.profile-dropdown .profile-name {
+    padding-right: 5px;
+}
+
+.profile-dropdown .arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.profile-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(16, 16, 48, 0.95);
+    min-width: 160px;
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
+    border-radius: 6px;
+    z-index: 100;
+    padding: 0.5rem 0;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 247, 255, 0.3);
+}
+
+.profile-dropdown .dropdown-content a {
+    color: #ccc;
+    padding: 0.5rem 1rem;
+    display: block;
+}
+
+.profile-dropdown .dropdown-content a:hover {
+    background-color: rgba(0, 247, 255, 0.1);
+    color: #00f7ff;
+}
+
+.profile-dropdown.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* Футер */
+.site-footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+}
+.profile-dropdown .dropdown-content {
+    display: none;
+}
+
+.profile-dropdown.open .dropdown-content {
+    display: block;
 }

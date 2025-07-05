@@ -9,7 +9,7 @@ from unidecode import unidecode
 
 
 class SpaceObj(models.Model):
-    title = models.CharField(max_length=255, verbose_name='Название')
+    title = models.CharField(max_length=255, verbose_name='Название', )
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Адресация')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')

@@ -1,0 +1,104 @@
+.form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 247, 255, 0.2);
+        color: #fff;
+    }
+
+    .form-container h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #00f7ff;
+        text-shadow: 0 0 5px #00f7ff;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #00f7ff;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.8rem 2.5rem 0.8rem 2.5rem;
+        border: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #00f7ff;
+        font-size: 1rem;
+        outline: none;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+    }
+
+    .form-icon {
+        position: absolute;
+        left: 1rem;
+        top: 38px;
+        color: #00f7ff;
+        pointer-events: none;
+    }
+
+    .form-error {
+        color: #ff4d4d;
+        font-size: 0.9rem;
+        margin-top: 0.3rem;
+        display: block;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #00f7ff, #00d4dd);
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 3px #ffffff;
+    }
+
+    .submit-button:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 12px rgba(0, 247, 255, 0.6);
+    }
+
+    .back-button {
+        margin-top: 20px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #00f7ff, #00d4dd);
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 3px #ffffff;
+    }
+
+    .back-button:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 12px rgba(0, 247, 255, 0.6);
+    }

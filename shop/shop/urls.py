@@ -23,6 +23,8 @@ from shop import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
+    path('', include('spaceshops.urls')),
+    path('', include('users.urls')),
     path("_-debug__/", include('debug_toolbar.urls'))
 ]
 

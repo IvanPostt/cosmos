@@ -8,50 +8,103 @@
     <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
 </head>
 <body class="cosmic-bg">
-    <div class="page-wrapper">
-        <header class="site-header">
-            <div class="logo">🌌 КосмоСфера</div>
-            <nav class="main-nav">
+<div class="page-wrapper">
+    <header class="site-header">
+        <div class="logo">🌌 КосмоСфера</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">Главная</a></li>
+
+                {% for item in menu %}
+                {% if item.url_name != 'contact' and item.url_name != 'login' %}
+                <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
+                {% elif item.url_name == 'login' %}
+                {% if user.is_authenticated %}
+                <li class="profile-dropdown">
+                    <span class="profile-name">{{ user.username }}</span>
+                    <span class="arrow">▼</span>
+                    <div class="dropdown-content">
+                        <a href="#">Профиль</a>
+                        <a href="#">Заказы</a>
+                        <a href="#">Выйти</a>
+                    </div>
+                </li>
+                {% else %}
+                <li><a href="{% url 'users:login' %}">{{ item.title }}</a></li>
+                {% endif %}
+                {% elif item.url_name == 'contact' %}
+                <li><a href="{% url 'spaceshops:contact' %}">{{ item.title }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <!-- Боковая панель -->
+        <aside class="sidebar">
+            <h3>Категории</h3>
+            <nav class="category-nav">
                 <ul>
-                    <li><a href="{% url 'index' %}">Главная</a></li>
-                    {% for item in menu %}
-                        <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
+                    {% for cat in categories %}
+                    <li>
+                        {% if current_category.slug == cat.slug %}
+                        <a href="{{ cat.get_absolute_url }}" class="selected">{{ cat.name }}</a>
+                        {% else %}
+                        <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                        {% endif %}
+                    </li>
                     {% endfor %}
                 </ul>
             </nav>
-        </header>
+        </aside>
 
-        <div class="main-container">
-            <!-- Боковая панель -->
-            <aside class="sidebar">
-                <h3>Категории</h3>
-                <nav class="category-nav">
-                    <ul>
-                        {% for cat in categories %}
-                            <li>
-                                {% if current_category.slug == cat.slug %}
-                                    <a href="{{ cat.get_absolute_url }}" class="selected">{{ cat.name }}</a>
-                                {% else %}
-                                    <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </aside>
-
-            <!-- Основной контент -->
-            <main class="page-content">
-                <div class="container">
-                    {% block content %}
-                    <!-- Здесь будет контент страниц -->
-                    {% endblock %}
-                </div>
-            </main>
-        </div>
+        <!-- Основной контент -->
+        <main class="page-content">
+            <div class="container">
+                {% block content %}
+                <!-- Здесь будет контент страниц -->
+                {% endblock %}
+            </div>
+        </main>
+    </div>
 
     <footer class="site-footer">
         <p>© 2025 КосмоТур — Исследуй Вселенную вместе с нами.</p>
     </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdown = document.querySelector('.profile-dropdown');
+        if (!dropdown) return;
+
+        const arrow = dropdown.querySelector('.arrow');
+
+        dropdown.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const content = this.querySelector('.dropdown-content');
+            const isOpen = this.classList.contains('open');
+
+            // Закрываем все другие меню
+            document.querySelectorAll('.profile-dropdown').forEach(dd => {
+                dd.classList.remove('open');
+            });
+
+            // Открываем текущее
+            if (!isOpen) {
+                this.classList.add('open');
+            }
+        });
+
+        // Закрытие при клике вне меню
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.profile-dropdown').forEach(dd => {
+                dd.classList.remove('open');
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

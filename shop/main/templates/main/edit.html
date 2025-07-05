@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
 
 <!-- Подключаем стили из static -->
-<link rel="stylesheet" href="{% static 'main/css/creates.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/edit.css' %}">
 
 <div class="center-container">
     <div class="form-container">
@@ -24,6 +24,7 @@
             {% endfor %}
 
             <button type="submit" class="submit-button">Редактировать</button>
+            <a class="back-button" href="{% url 'index' %}">Назад</a>
         </form>
     </div>
 </div>

@@ -1,66 +1,84 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
+from django.views import View
+from django.views.generic import FormView, UpdateView
+
+# from django.views.generic import TemplateView
 
 from .forms import AddForm
 from .models import SpaceObj, Category, TagsSpace
 
 menu = [{'title': 'Информация о сайте', 'url_name': 'about'},
-        {'title': 'Контактная информация', 'url_name': 'contact'},
+        {'title': 'Онлайн магазин', 'url_name': 'contact'},
         {'title': 'Создать запись', 'url_name': 'createpost'},
         {'title': 'Вход', 'url_name': 'login'}]
 
 
 def index(request):
     posts = SpaceObj.objects.all()
+    paginator = Paginator(posts, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     categories = Category.objects.all()
     data = {
-        'title': 'Home',
+        'title': 'Иформация о космичесских объектов',
         'menu': menu,
-        'posts': posts,
-        'categories': categories
+        'categories': categories,
+        'page_obj': page_obj
     }
     return render(request, 'main/index.html', context=data)
 
 
+
+
 def about(request):
     categories = Category.objects.all()
-    return render(request, 'main/about.html', {'title': 'About page', 'menu': menu, 'categories': categories})
+    return render(request, 'main/about.html', {'title': 'Данные сайта', 'menu': menu, 'categories': categories})
 
 
-def createpost(request):
-    if request.method == 'POST':
-        form = AddForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = AddForm()
-    data = {
+class CreatePost(FormView):
+    form_class = AddForm
+    template_name = 'main/create.html'
+    success_url = reverse_lazy('index')
+
+    extra_context = {
         'menu': menu,
-        'title': 'Создать новую запись',
-        'form': form
-
+        'title': 'Cоздать новую запись',
+        'categories': Category.objects.all()
     }
-    return render(request, 'main/create.html', data)
 
-def edit_post(request, pk):
-    post = get_object_or_404(SpaceObj, pk=pk)
-    if request.method == 'POST':
-        form = AddForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = AddForm(instance=post)
-    return render(request, 'main/edit.html', {'form':form, 'title': 'Редактирование поста'})
-def contact(request):
-    return HttpResponse('Контактная информация')
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
-def login(request):
-    return HttpResponse('Вход')
+class EditPost(UpdateView):
+    model = SpaceObj
+    form_class = AddForm
+    template_name = 'main/edit.html'
+    success_url = reverse_lazy('index')
+    extra_context = {
+        'menu': menu,
+        'title': 'Редактирование Поста',
+        'categories':Category.objects.all()
+    }
+
+# def edit_post(request, pk):
+#     post = get_object_or_404(SpaceObj, pk=pk)
+#     if request.method == 'POST':
+#         form = AddForm(request.POST, request.FILES, instance=post)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('index')
+#     else:
+#         form = AddForm(instance=post)
+#     return render(request, 'main/edit.html',
+#                   {'form': form, 'title': 'Редактирование поста', 'menu': menu, 'categories': Category.objects.all()})
+
+
 
 
 def show_post(request, p_slug):
@@ -78,16 +96,21 @@ def show_post(request, p_slug):
 def show_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     categories = Category.objects.all()
-    posts = SpaceObj.objects.filter(category=category.id)
+
+    posts_list = SpaceObj.objects.filter(category=category.id)
+
+    paginator = Paginator(posts_list, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     data = {
         'title': f'{category.name}',
         'menu': menu,
-        'posts': posts,
+        'categories': categories,
+        'page_obj': page_obj,
         'category': category,
-        'categories': categories
     }
     return render(request, 'main/index.html', context=data)
-
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("Page not found")
