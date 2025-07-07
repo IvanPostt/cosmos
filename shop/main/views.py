@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -38,8 +40,7 @@ def about(request):
     categories = Category.objects.all()
     return render(request, 'main/about.html', {'title': 'Данные сайта', 'menu': menu, 'categories': categories})
 
-
-class CreatePost(FormView):
+class CreatePost(LoginRequiredMixin, FormView):
     form_class = AddForm
     template_name = 'main/create.html'
     success_url = reverse_lazy('index')
@@ -55,7 +56,7 @@ class CreatePost(FormView):
         return super().form_valid(form)
 
 
-class EditPost(UpdateView):
+class EditPost(LoginRequiredMixin, UpdateView):
     model = SpaceObj
     form_class = AddForm
     template_name = 'main/edit.html'

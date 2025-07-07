@@ -24,9 +24,9 @@
                     <span class="profile-name">{{ user.username }}</span>
                     <span class="arrow">▼</span>
                     <div class="dropdown-content">
-                        <a href="#">Профиль</a>
+                        <a href="{% url 'users:profile' user.pk %}">Профиль</a>
                         <a href="#">Заказы</a>
-                        <a href="#">Выйти</a>
+                        <a href="{% url 'users:logout' %}">Выйти</a>
                     </div>
                 </li>
                 {% else %}
@@ -74,36 +74,37 @@
     </footer>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const dropdown = document.querySelector('.profile-dropdown');
-        if (!dropdown) return;
+    const dropdown = document.querySelector('.profile-dropdown');
+    if (!dropdown) return;
 
-        const arrow = dropdown.querySelector('.arrow');
+    dropdown.addEventListener('click', function (e) {
+        const target = e.target;
 
-        dropdown.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        if (target.tagName === 'A') {
+            return;
+        }
 
-            const content = this.querySelector('.dropdown-content');
-            const isOpen = this.classList.contains('open');
+        e.preventDefault();
+        e.stopPropagation();
 
-            // Закрываем все другие меню
-            document.querySelectorAll('.profile-dropdown').forEach(dd => {
-                dd.classList.remove('open');
-            });
+        const content = this.querySelector('.dropdown-content');
+        const isOpen = this.classList.contains('open');
 
-            // Открываем текущее
-            if (!isOpen) {
-                this.classList.add('open');
-            }
+        document.querySelectorAll('.profile-dropdown').forEach(dd => {
+            dd.classList.remove('open');
         });
 
-        // Закрытие при клике вне меню
-        document.addEventListener('click', function () {
-            document.querySelectorAll('.profile-dropdown').forEach(dd => {
-                dd.classList.remove('open');
-            });
+        if (!isOpen) {
+            this.classList.add('open');
+        }
+    });
+
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.profile-dropdown').forEach(dd => {
+            dd.classList.remove('open');
         });
     });
+});
 </script>
 
 </body>

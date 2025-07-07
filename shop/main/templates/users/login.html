@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
+<link rel="stylesheet" href="{% static 'main/css/login.css' %}">
 <h1>Авторизация</h1>
 <form method="post">
+    <div class="form-error">{{ form.non_field_errors }}</div>
     {% csrf_token %}
-    {{ form.as_p }}
-    <p><button type="submit">Войти</button></p>
+    {% for i in form %}
+    <p><label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }}</p>
+    <div class="form-error">{{ i.errors }}</div>
+    {% endfor %}
+    <a href="{% url 'users:register' %}" style="color: #00f7ff">Нет аккаунта? Зарегестрируйся</a>
+    <a href="{% url 'users:password_change' %}">Забыли пароль?</a>
+    <p><button type="submit" class="submit-button">Войти</button></p>
 </form>
 {% endblock %}
