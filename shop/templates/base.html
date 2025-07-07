@@ -1,40 +1,58 @@
 {% load static %}
+{% load i18n %}  {# Для тега {% trans %} и {% get_current_language %} #}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}КосмоТур{% endblock %}</title>
+    <title>{% block title %}{% trans "КосмоТур" %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
 </head>
 <body class="cosmic-bg">
 <div class="page-wrapper">
     <header class="site-header">
-        <div class="logo">🌌 КосмоСфера</div>
+        <div class="logo">🌌 {% trans "КосмоСфера" %}</div>
         <nav class="main-nav">
             <ul>
-                <li><a href="{% url 'index' %}">Главная</a></li>
+                <li><a href="{% url 'index' %}">{% trans "Главная" %}</a></li>
 
                 {% for item in menu %}
-                {% if item.url_name != 'contact' and item.url_name != 'login' %}
-                <li><a href="{% url item.url_name %}">{{ item.title }}</a></li>
-                {% elif item.url_name == 'login' %}
-                {% if user.is_authenticated %}
-                <li class="profile-dropdown">
-                    <span class="profile-name">{{ user.username }}</span>
-                    <span class="arrow">▼</span>
-                    <div class="dropdown-content">
-                        <a href="{% url 'users:profile' user.pk %}">Профиль</a>
-                        <a href="#">Заказы</a>
-                        <a href="{% url 'users:logout' %}">Выйти</a>
-                    </div>
-                </li>
-                {% else %}
-                <li><a href="{% url 'users:login' %}">{{ item.title }}</a></li>
-                {% endif %}
-                {% elif item.url_name == 'contact' %}
-                <li><a href="{% url 'spaceshops:contact' %}">{{ item.title }}</a></li>
-                {% endif %}
+                    {% if item.url_name == 'about' %}
+                    <li class="profile-dropdown">
+                        <span class="profile-name">{% trans "Язык" %}</span>
+                        <span class="arrow">▼</span>
+                        <div class="dropdown-content">
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="language" value="ru">🇷🇺 {% trans "Русский" %}</button>
+                                <button type="submit" name="language" value="en">🇬🇧 English</button>
+                                <button type="submit" name="language" value="es">🇪🇸 Español</button>
+                                <button type="submit" name="language" value="zh-hans">🇨🇳 中文</button>
+                                <button type="submit" name="language" value="ar">🇸🇦 العربية</button>
+                                <button type="submit" name="language" value="hy">🇦🇲 Հայերեն</button>
+                            </form>
+                        </div>
+                    </li>
+                    {% elif item.url_name == 'login' %}
+                        {% if user.is_authenticated %}
+                        <li class="profile-dropdown">
+                            <span class="profile-name">{{ user.username }}</span>
+                            <span class="arrow">▼</span>
+                            <div class="dropdown-content">
+                                <a href="{% url 'users:profile' user.pk %}">{% trans "Профиль" %}</a>
+                                <a href="#">{% trans "Заказы" %}</a>
+                                <a href="{% url 'users:logout' %}">{% trans "Выйти" %}</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li><a href="{% url 'users:login' %}">{% trans item.title %}</a></li>
+                        {% endif %}
+                    {% elif item.url_name == 'contact' %}
+                        <li><a href="{% url 'spaceshops:contact' %}">{% trans item.title %}</a></li>
+                    {% else %}
+                        <li><a href="{% url item.url_name %}">{% trans item.title %}</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </nav>
@@ -43,15 +61,15 @@
     <div class="main-container">
         <!-- Боковая панель -->
         <aside class="sidebar">
-            <h3>Категории</h3>
+            <h3>{% trans "Категории" %}</h3>
             <nav class="category-nav">
                 <ul>
                     {% for cat in categories %}
                     <li>
                         {% if current_category.slug == cat.slug %}
-                        <a href="{{ cat.get_absolute_url }}" class="selected">{{ cat.name }}</a>
+                        <a href="{{ cat.get_absolute_url }}" class="selected">{% trans cat.name %}</a>
                         {% else %}
-                        <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                        <a href="{{ cat.get_absolute_url }}">{% trans cat.name %}</a>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -70,42 +88,36 @@
     </div>
 
     <footer class="site-footer">
-        <p>© 2025 КосмоТур — Исследуй Вселенную вместе с нами.</p>
+        <p>© 2025 {% trans "КосмоТур" %} — {% trans "Исследуй Вселенную вместе с нами." %}</p>
     </footer>
+
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const dropdown = document.querySelector('.profile-dropdown');
-    if (!dropdown) return;
+        const dropdowns = document.querySelectorAll('.profile-dropdown');
 
-    dropdown.addEventListener('click', function (e) {
-        const target = e.target;
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', function (e) {
+                const target = e.target;
+                if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                    return;
+                }
 
-        if (target.tagName === 'A') {
-            return;
-        }
+                e.preventDefault();
+                e.stopPropagation();
 
-        e.preventDefault();
-        e.stopPropagation();
-
-        const content = this.querySelector('.dropdown-content');
-        const isOpen = this.classList.contains('open');
-
-        document.querySelectorAll('.profile-dropdown').forEach(dd => {
-            dd.classList.remove('open');
+                const isOpen = this.classList.contains('open');
+                dropdowns.forEach(dd => dd.classList.remove('open'));
+                if (!isOpen) {
+                    this.classList.add('open');
+                }
+            });
         });
 
-        if (!isOpen) {
-            this.classList.add('open');
-        }
-    });
-
-    document.addEventListener('click', function () {
-        document.querySelectorAll('.profile-dropdown').forEach(dd => {
-            dd.classList.remove('open');
+        document.addEventListener('click', function () {
+            dropdowns.forEach(dd => dd.classList.remove('open'));
         });
     });
-});
-</script>
-
+    </script>
+</div>
 </body>
 </html>

@@ -19,16 +19,22 @@ from django.contrib import admin
 from django.urls import path, include
 from main.views import page_not_found
 from shop import settings
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import set_language
 
+from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
+    path('in18n/setlang/', set_language, name='set_language')
+]
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('spaceshops.urls')),
     path('', include('users.urls')),
-    path("_-debug__/", include('debug_toolbar.urls'))
-]
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [path('_-debug__/', include('debug_toolbar.urls'))]
 
 handler404 = page_not_found

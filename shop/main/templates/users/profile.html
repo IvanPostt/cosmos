@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
 
 <div class="profile-container">
     <div class="profile-header">
-        <h1>Профиль пользователя: {{ user.username }}</h1>
-        <p>Добро пожаловать в ваш личный кабинет</p>
+        <h1>{% blocktrans %}Профиль пользователя: {{ user.username }}{% endblocktrans %}</h1>
+        <p>{% trans "Добро пожаловать в ваш личный кабинет" %}</p>
     </div>
 
     <div class="profile-card">
         <div class="avatar-wrapper">
             {% if user.photo %}
-                <img src="{{ user.photo.url }}" alt="Фото профиля" class="avatar">
+                <img src="{{ user.photo.url }}" alt="{% trans 'Фото профиля' %}" class="avatar">
             {% else %}
-                <img src="/media/users/cosmo.jpg" alt="Стандартное фото" class="avatar">
+                <img src="/media/users/cosmo.jpg" alt="{% trans 'Стандартное фото' %}" class="avatar">
             {% endif %}
         </div>
 
@@ -25,16 +26,14 @@
 
             {% for field in form %}
                 <div class="form-group">
-                    <label for="{{ field.id_for_label }}" class="form-label">
-                        {{ field.label }}
-                    </label>
+                    <label for="{{ field.id_for_label }}" class="form-label">{% trans field.label %}</label>
                     {{ field }}
                     <div class="form-error">{{ field.errors }}</div>
                 </div>
             {% endfor %}
 
             <button type="submit" class="submit-button">
-                <i class="fas fa-save"></i> Сохранить изменения
+                <i class="fas fa-save"></i> {% trans "Сохранить изменения" %}
             </button>
         </form>
     </div>

@@ -5,3 +5,4 @@ migrations/
 .env
 media/
 uploads/
+locale/

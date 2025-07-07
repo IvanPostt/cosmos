@@ -1,8 +1,9 @@
-{% extends  'base.html' %}
+{% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
-<h1>{{post.title}}</h1>
+<h1>{% trans post.title %}</h1>
 {% if post.file %}
-<img src="{{ post.file.url }}" class="img-article-left" width="100px" , height="100px">
+    <img src="{{ post.file.url }}" class="img-article-left" width="100" height="100" alt="{% trans post.title %}">
 {% endif %}
-{{post.description|linebreaks}}
+{{ post.description|linebreaks }}
 {% endblock %}

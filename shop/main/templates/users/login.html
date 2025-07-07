@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
-<h1>Авторизация</h1>
+
+<h1>{% trans "Авторизация" %}</h1>
+
 <form method="post">
     <div class="form-error">{{ form.non_field_errors }}</div>
     {% csrf_token %}
-    {% for i in form %}
-    <p><label class="form-label" for="{{ i.id_for_label }}">{{ i.label }}</label>{{ i }}</p>
-    <div class="form-error">{{ i.errors }}</div>
+    {% for field in form %}
+    <p>
+        <label class="form-label" for="{{ field.id_for_label }}">{% trans field.label %}</label>
+        {{ field }}
+    </p>
+    <div class="form-error">{{ field.errors }}</div>
     {% endfor %}
-    <a href="{% url 'users:register' %}" style="color: #00f7ff">Нет аккаунта? Зарегестрируйся</a>
-    <a href="{% url 'users:password_change' %}">Забыли пароль?</a>
-    <p><button type="submit" class="submit-button">Войти</button></p>
+    <a href="{% url 'users:register' %}" style="color: #00f7ff">{% trans "Нет аккаунта? Зарегистрируйся" %}</a><br>
+    <a href="{% url 'users:password_change' %}">{% trans "Забыли пароль?" %}</a>
+    <p><button type="submit" class="submit-button">{% trans "Войти" %}</button></p>
 </form>
 {% endblock %}

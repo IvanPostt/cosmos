@@ -1,7 +1,9 @@
+{% load i18n %}
 {% if tags %}
-<p>Тэг:</p>
-<ul class="tags=list">
+<p>{% trans "Тэг:" %}</p>
+<ul class="tags-list">
     {% for i in tags %}
-    <li><a href="{{ i.get_absolute_url }}">{{ t.names }}</a></li>
+        <li><a href="{{ i.get_absolute_url }}">{% trans i.name %}</a></li>
     {% endfor %}
 </ul>
+{% endif %}

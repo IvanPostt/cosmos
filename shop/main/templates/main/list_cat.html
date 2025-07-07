@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+<ul>
 {% for cat in posts %}
-{% if cat.id == cat.selected %}
-<li class="selected">{{ cat.name }}</li>
-{% else %}
-<li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
-{% endif %}
+    {% if cat.id == cat.selected %}
+        <li class="selected">{% trans cat.name %}</li>
+    {% else %}
+        <li><a href="{{ cat.get_absolute_url }}">{% trans cat.name %}</a></li>
+    {% endif %}
 {% endfor %}
+</ul>

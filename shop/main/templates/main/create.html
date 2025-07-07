@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <!-- Подключаем Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
@@ -9,21 +10,21 @@
 
 <div class="center-container">
     <div class="form-container">
-        <h1>{{ title }}</h1>
+        <h1>{% trans title %}</h1>
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-error">{{ form.non_field_errors }}</div>
 
             {% for f in form %}
             <div class="form-group">
-                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                <label class="form-label" for="{{ f.id_for_label }}">{% trans f.label %}</label>
                 {{ f }}
                 <i class="fas fa-{{ f.field.widget.attrs.icon|default:'pen' }} form-icon"></i>
                 <div class="form-error">{{ f.errors }}</div>
             </div>
             {% endfor %}
 
-            <button type="submit" class="submit-button">Отправить</button>
+            <button type="submit" class="submit-button">{% trans "Отправить" %}</button>
         </form>
     </div>
 </div>

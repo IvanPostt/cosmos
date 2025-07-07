@@ -361,3 +361,35 @@ p {
 .profile-dropdown.open .dropdown-content {
     display: block;
 }
+.language-switcher {
+    display: inline-block;
+    margin-left: 20px;
+    position: relative;
+}
+
+.language-switcher select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background: linear-gradient(145deg, #0d0d2b, #101030);
+    color: #00f7ff;
+    border: 1px solid rgba(0, 247, 255, 0.3);
+    padding: 0.4rem 1.2rem;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-shadow: 0 0 3px #00f7ff;
+    backdrop-filter: blur(6px);
+}
+
+.language-switcher select:hover {
+    background: rgba(0, 247, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+    color: #ffffff;
+}
+

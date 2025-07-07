@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
@@ -13,7 +13,7 @@ from django.views.generic import FormView, UpdateView
 from .forms import AddForm
 from .models import SpaceObj, Category, TagsSpace
 
-menu = [{'title': 'Информация о сайте', 'url_name': 'about'},
+menu = [{'title': 'Язык', 'url_name': 'about'},
         {'title': 'Онлайн магазин', 'url_name': 'contact'},
         {'title': 'Создать запись', 'url_name': 'createpost'},
         {'title': 'Вход', 'url_name': 'login'}]
@@ -26,7 +26,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
     categories = Category.objects.all()
     data = {
-        'title': 'Иформация о космичесских объектов',
+        'title': 'Иформация о космичесских объектов.',
         'menu': menu,
         'categories': categories,
         'page_obj': page_obj
@@ -50,7 +50,10 @@ class CreatePost(LoginRequiredMixin, FormView):
         'title': 'Cоздать новую запись',
         'categories': Category.objects.all()
     }
-
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.username != 'q':
+            return HttpResponseForbidden('Данная функция доступна только администраторам сайта КосмоСфера')
+        return super().dispatch(request, *args, **kwargs)
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)

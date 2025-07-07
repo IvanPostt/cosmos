@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}{{ title }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans title %}{% endblock %}
 {% block content %}
-<h1>{{ title }}</h1>
+<h1>{% trans title %}</h1>
 
 <div class="posts-container">
     {% for post in page_obj %}
@@ -15,13 +16,15 @@
             <div class="post-text">
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.description|truncatewords:50 }}</p>
-                <a href="{{ post.get_absolute_url }}" class="read-more">Узнать подробнее</a>
-                <a href="{% url 'edit' post.slug %}" class="read-more">Редактировать запись</a>
+                <a href="{{ post.get_absolute_url }}" class="read-more">{% trans "Узнать подробнее" %}</a>
+                {% if user.username == 'q' %}
+                <a href="{% url 'edit' post.slug %}" class="read-more">{% trans "Редактировать запись" %}</a>
+                {% endif %}
             </div>
         </div>
     </div>
     {% empty %}
-    <p>Постов пока нет.</p>
+    <p>{% trans "Постов пока нет." %}</p>
     {% endfor %}
 </div>
 
@@ -31,10 +34,10 @@
     <ul class="pagination">
         {% if page_obj.has_previous and page_obj.number != 1 %}
             <li class="page-item">
-                <a class="page-link" href="?page=1">&laquo; Первая</a>
+                <a class="page-link" href="?page=1">&laquo; {% trans "Первая" %}</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Назад" %}</a>
             </li>
         {% endif %}
 
@@ -52,10 +55,10 @@
 
         {% if page_obj.has_next and page_obj.number != page_obj.paginator.num_pages %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Вперёд" %}</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{% trans "Последняя" %} &raquo;</a>
             </li>
         {% endif %}
     </ul>

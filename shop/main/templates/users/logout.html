@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <form method="post" action="{% url 'users:logout' %}">
     {% csrf_token %}
-    <p>Вы уверены, что хотите выйти?</p>
-    <a href="{% url 'users:login' %}">Выйти</a>
+    <p>{% trans "Вы уверены, что хотите выйти?" %}</p>
+    <a href="{% url 'users:login' %}">{% trans "Выйти" %}</a>
 </form>
 {% endblock %}
