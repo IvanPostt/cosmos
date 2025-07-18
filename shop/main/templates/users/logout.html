@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 {% block content %}
-<form method="post" action="{% url 'users:logout' %}">
-    {% csrf_token %}
-    <p>{% trans "Вы уверены, что хотите выйти?" %}</p>
-    <a href="{% url 'users:login' %}">{% trans "Выйти" %}</a>
-</form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'main/css/logout.css' %}">
+<div class="logout-container">
+    <form method="post" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <p>{% trans "Вы уверены, что хотите выйти?" %}</p>
+        <a href="{% url 'users:login' %}" class="submit-button">{% trans "Выйти" %}</a>
+        <a href="{% url 'index' %}" class="submit-button">{% trans "Назад" %}</a>
+    </form>
+</div>
 {% endblock %}

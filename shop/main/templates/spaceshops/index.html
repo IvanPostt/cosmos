@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'main/css/products.css' %}">
 <h1>{{ title }}</h1>
-<h1>Добро пожаловать в онлайн магазин КосмоСфера, здесь вы можете приобрести товары, по космичесской тематикой</h1>
+<h1>{% trans "Добро пожаловать в онлайн магазин КосмоСфера, здесь вы можете приобрести товары, по космичесской тематикой" %}</h1>
+<div class="product-grid">
+    {% for product in space %}
+<div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image" width="10px" height="10px">
+            <div class="product-info">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <p class="product-description">{{ product.description|truncatewords:20 }}</p>
+                <p class="product-price">{% trans "Цена" %}: {{ product.price }} ₽</p>
+                <form method="post" action="#">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart">{% trans "В корзину" %}</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -315,7 +315,7 @@ p {
     transition: transform 0.3s ease;
 }
 
-.profile-dropdown .dropdown-content {
+.profile-dropdown .dropdown-content  {
     display: none;
     position: absolute;
     top: 100%;
@@ -345,6 +345,25 @@ p {
     transform: rotate(180deg);
 }
 
+.profile-dropdown .dropdown-content button {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    color: #ccc;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-dropdown .dropdown-content button:hover {
+    background-color: rgba(0, 247, 255, 0.1);
+    color: #00f7ff;
+    box-shadow: inset 2px 0 0 #00f7ff;
+}
+
 /* Футер */
 .site-footer {
     text-align: center;
@@ -362,9 +381,22 @@ p {
     display: block;
 }
 .language-switcher {
+    cursor: pointer;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    border: 1.5px solid #00f7ff;
+    color: #00f7ff;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
     display: inline-block;
-    margin-left: 20px;
-    position: relative;
+    margin-left: 1rem;
+}
+
+.language-switcher:hover {
+    background: rgba(0, 247, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+    color: #ffffff;
 }
 
 .language-switcher select {
@@ -385,11 +417,5 @@ p {
     font-weight: 500;
     text-shadow: 0 0 3px #00f7ff;
     backdrop-filter: blur(6px);
-}
-
-.language-switcher select:hover {
-    background: rgba(0, 247, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
-    color: #ffffff;
 }
 

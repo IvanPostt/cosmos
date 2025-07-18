@@ -51,8 +51,8 @@ class CreatePost(LoginRequiredMixin, FormView):
         'categories': Category.objects.all()
     }
     def dispatch(self, request, *args, **kwargs):
-        if request.user.username != 'q':
-            return HttpResponseForbidden('Данная функция доступна только администраторам сайта КосмоСфера')
+        if request.user.username != 'qq':
+            return render(request, 'main/sorry.html', {'error': 'Доступ запрещён: только для администраторов'})
         return super().dispatch(request, *args, **kwargs)
     def form_valid(self, form):
         form.save()

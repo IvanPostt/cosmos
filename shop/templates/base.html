@@ -25,7 +25,7 @@
                         <div class="dropdown-content">
                             <form action="{% url 'set_language' %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" name="language" value="ru">🇷🇺 {% trans "Русский" %}</button>
+                                <button type="submit" name="language" value="ru" style="color: #00f7ff">🇷🇺 {% trans "Русский" %}</button>
                                 <button type="submit" name="language" value="en">🇬🇧 English</button>
                                 <button type="submit" name="language" value="es">🇪🇸 Español</button>
                                 <button type="submit" name="language" value="zh-hans">🇨🇳 中文</button>
