@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.weather_processor'
             ],
         },
     },
@@ -130,7 +131,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
 
 LANGUAGES = [
-    ('ru', 'Русский'),
+    ('ru', 'Russian'),
     ('en', 'English'),
     ('es', 'Español'),
     ('zh-hans', '简体中文'),

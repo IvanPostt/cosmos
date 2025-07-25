@@ -1,3 +1,8 @@
+from datetime import datetime
+import requests
+from django.http import JsonResponse
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -34,11 +39,10 @@ def index(request):
     return render(request, 'main/index.html', context=data)
 
 
-
-
 def about(request):
     categories = Category.objects.all()
     return render(request, 'main/about.html', {'title': 'Данные сайта', 'menu': menu, 'categories': categories})
+
 
 class CreatePost(LoginRequiredMixin, FormView):
     form_class = AddForm
@@ -50,10 +54,12 @@ class CreatePost(LoginRequiredMixin, FormView):
         'title': 'Cоздать новую запись',
         'categories': Category.objects.all()
     }
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.username != 'qq':
             return render(request, 'main/sorry.html', {'error': 'Доступ запрещён: только для администраторов'})
         return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
@@ -67,8 +73,9 @@ class EditPost(LoginRequiredMixin, UpdateView):
     extra_context = {
         'menu': menu,
         'title': 'Редактирование Поста',
-        'categories':Category.objects.all()
+        'categories': Category.objects.all()
     }
+
 
 # def edit_post(request, pk):
 #     post = get_object_or_404(SpaceObj, pk=pk)
@@ -81,8 +88,6 @@ class EditPost(LoginRequiredMixin, UpdateView):
 #         form = AddForm(instance=post)
 #     return render(request, 'main/edit.html',
 #                   {'form': form, 'title': 'Редактирование поста', 'menu': menu, 'categories': Category.objects.all()})
-
-
 
 
 def show_post(request, p_slug):
@@ -116,6 +121,7 @@ def show_category(request, category_slug):
     }
     return render(request, 'main/index.html', context=data)
 
+
 def page_not_found(request, exception):
     return HttpResponseNotFound("Page not found")
 
@@ -127,3 +133,8 @@ def show_tags(request, tags_slug):
         'menu': menu,
     }
     return render(request, 'main/index.html', context=data)
+
+
+def data(request):
+    new_data = datetime.now()
+    return render(request, 'base.html', {'new_data': new_data})

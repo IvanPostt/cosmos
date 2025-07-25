@@ -13,46 +13,51 @@
 <div class="page-wrapper">
     <header class="site-header">
         <div class="logo">🌌 {% trans "КосмоСфера" %}</div>
+        <h2>{% trans "Текущее время:" %} <span id="clock">{{ new_data|date:"H:i:s" }}</span></h2>
+        <div class="weather">
+            <p>{{ weather.city }}: {{ weather.temp }}°C, {{ weather.description }}</p>
+        </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="{% url 'index' %}">{% trans "Главная" %}</a></li>
 
                 {% for item in menu %}
-                    {% if item.url_name == 'about' %}
-                    <li class="profile-dropdown">
-                        <span class="profile-name">{% trans "Язык" %}</span>
-                        <span class="arrow">▼</span>
-                        <div class="dropdown-content">
-                            <form action="{% url 'set_language' %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" name="language" value="ru" style="color: #00f7ff">🇷🇺 {% trans "Русский" %}</button>
-                                <button type="submit" name="language" value="en">🇬🇧 English</button>
-                                <button type="submit" name="language" value="es">🇪🇸 Español</button>
-                                <button type="submit" name="language" value="zh-hans">🇨🇳 中文</button>
-                                <button type="submit" name="language" value="ar">🇸🇦 العربية</button>
-                                <button type="submit" name="language" value="hy">🇦🇲 Հայերեն</button>
-                            </form>
-                        </div>
-                    </li>
-                    {% elif item.url_name == 'login' %}
-                        {% if user.is_authenticated %}
-                        <li class="profile-dropdown">
-                            <span class="profile-name">{{ user.username }}</span>
-                            <span class="arrow">▼</span>
-                            <div class="dropdown-content">
-                                <a href="{% url 'users:profile' user.pk %}">{% trans "Профиль" %}</a>
-                                <a href="#">{% trans "Заказы" %}</a>
-                                <a href="{% url 'users:logout' %}">{% trans "Выйти" %}</a>
-                            </div>
-                        </li>
-                        {% else %}
-                        <li><a href="{% url 'users:login' %}">{% trans item.title %}</a></li>
-                        {% endif %}
-                    {% elif item.url_name == 'contact' %}
-                        <li><a href="{% url 'spaceshops:contact' %}">{% trans item.title %}</a></li>
-                    {% else %}
-                        <li><a href="{% url item.url_name %}">{% trans item.title %}</a></li>
-                    {% endif %}
+                {% if item.url_name == 'about' %}
+                <li class="profile-dropdown">
+                    <span class="profile-name">{% trans "Язык" %}</span>
+                    <span class="arrow">▼</span>
+                    <div class="dropdown-content">
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="language" value="ru">🇷🇺 Русский</button>
+                            <button type="submit" name="language" value="en">🇬🇧 English</button>
+                            <button type="submit" name="language" value="es">🇪🇸 Español</button>
+                            <button type="submit" name="language" value="zh-hans">🇨🇳 中文</button>
+                            <button type="submit" name="language" value="ar">🇸🇦 العربية</button>
+                            <button type="submit" name="language" value="hy">🇦🇲 Հայերեն</button>
+                        </form>
+                    </div>
+                </li>
+                {% elif item.url_name == 'login' %}
+                {% if user.is_authenticated %}
+                <li class="profile-dropdown">
+                    <span class="profile-name">{{ user.username }}</span>
+                    <span class="arrow">▼</span>
+                    <div class="dropdown-content">
+                        <a href="{% url 'users:profile' user.pk %}">{% trans "Профиль" %}</a>
+                        <a href="#">{% trans "Заказы" %}</a>
+                        <a href="{% url 'users:logout' %}">{% trans "Выйти" %}</a>
+                    </div>
+                </li>
+                {% else %}
+                <li><a href="{% url 'users:login' %}">{% trans item.title %}</a></li>
+                {% endif %}
+                {% elif item.url_name == 'contact' %}
+                <li><a href="{% url 'spaceshops:contact' %}">{% trans item.title %}</a></li>
+                {% else %}
+                <li><a href="{% url item.url_name %}">{% trans item.title %}</a></li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </nav>
@@ -92,31 +97,44 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const dropdowns = document.querySelectorAll('.profile-dropdown');
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdowns = document.querySelectorAll('.profile-dropdown');
 
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', function (e) {
-                const target = e.target;
-                if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-                    return;
-                }
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', function (e) {
+                    const target = e.target;
+                    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+                        return;
+                    }
 
-                e.preventDefault();
-                e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
 
-                const isOpen = this.classList.contains('open');
+                    const isOpen = this.classList.contains('open');
+                    dropdowns.forEach(dd => dd.classList.remove('open'));
+                    if (!isOpen) {
+                        this.classList.add('open');
+                    }
+                });
+            });
+
+            document.addEventListener('click', function () {
                 dropdowns.forEach(dd => dd.classList.remove('open'));
-                if (!isOpen) {
-                    this.classList.add('open');
-                }
             });
         });
+    </script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = timeString;
+        }
 
-        document.addEventListener('click', function () {
-            dropdowns.forEach(dd => dd.classList.remove('open'));
-        });
-    });
+        setInterval(updateClock, 1000);
+        updateClock();  // первый запуск сразу
     </script>
 </div>
 </body>
